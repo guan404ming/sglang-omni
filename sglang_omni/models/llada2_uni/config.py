@@ -77,14 +77,16 @@ class LLaDA2UniT2IPipelineConfig(PipelineConfig):
         StageConfig(
             name=T2I_GENERATOR_STAGE,
             process="pipeline",
-            factory=f"{_PKG}.stages.create_t2i_generator_executor",
+            factory_path=f"{_PKG}.stages.create_t2i_generator_executor",
+            factory=FactoryArgs(device="cuda"),
             gpu=0,
             next=IMAGE_DECODER_STAGE,
         ),
         StageConfig(
             name=IMAGE_DECODER_STAGE,
             process="pipeline",
-            factory=f"{_PKG}.stages.create_image_decoder_executor",
+            factory_path=f"{_PKG}.stages.create_image_decoder_executor",
+            factory=FactoryArgs(device="cuda"),
             gpu=0,
             terminal=True,
         ),
